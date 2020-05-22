@@ -56,6 +56,7 @@ public class Authorization extends JPanel {
         enter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 if(logf.getText().isEmpty() || parf.getText().isEmpty()){
                     JOptionPane.showMessageDialog(frame, "Fill all fields");
                 }
@@ -70,9 +71,14 @@ public class Authorization extends JPanel {
                         logf.setText("");
                         parf.setText("");
 
-                        frame.authorization.setVisible(false);
-                        frame.window1.setVisible(true);
-
+                        if(authUser.getRole().equals("ADMIN")){
+                            frame.authorization.setVisible(false);
+                            frame.adminPage.setVisible(true);
+                        }
+                        else {
+                            frame.authorization.setVisible(false);
+                            frame.window1.setVisible(true);
+                        }
 //                        if(authUser.getRole().equals("ADMIN")){
 //                            //go to AddBookPage
 //                        }

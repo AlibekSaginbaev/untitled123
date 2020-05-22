@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 
 public class Profile extends JPanel {
     private JLabel main, name, surname, login;
-    private JTextArea namet, surnamet, logint;
+    public static JTextArea namet, surnamet, logint;
     private JButton Back;
     private BossFrame frame;
     private JButton refresh;

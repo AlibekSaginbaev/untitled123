@@ -7,14 +7,20 @@ public class Question implements Serializable {
     private Long id;
     private String question;
     private String rightAnswer;
-    private ArrayList<String> answers;
+    private String answ1, answ2, answ3, answ4;
     private boolean answeredRight;
 
-    public Question(Long id, String question, String rightAnswer, ArrayList<String> answers) {
+    public Question() {
+    }
+
+    public Question(Long id, String question, String rightAnswer, String answ1, String answ2, String answ3, String answ4) {
         this.id = id;
         this.question = question;
         this.rightAnswer = rightAnswer;
-        this.answers = answers;
+        this.answ1 = answ1;
+        this.answ2 = answ2;
+        this.answ3 = answ3;
+        this.answ4 = answ4;
         answeredRight=false;
     }
 
@@ -51,12 +57,40 @@ public class Question implements Serializable {
         this.rightAnswer = rightAnswer;
     }
 
-    public ArrayList<String> getAnswers() {
-        return answers;
+    public String getAnsw1() {
+        return answ1;
     }
 
-    public void setAnswers(ArrayList<String> answers) {
-        this.answers = answers;
+    public void setAnsw1(String answ1) {
+        this.answ1 = answ1;
+    }
+
+    public String getAnsw2() {
+        return answ2;
+    }
+
+    public void setAnsw2(String answ2) {
+        this.answ2 = answ2;
+    }
+
+    public String getAnsw3() {
+        return answ3;
+    }
+
+    public void setAnsw3(String answ3) {
+        this.answ3 = answ3;
+    }
+
+    public String getAnsw4() {
+        return answ4;
+    }
+
+    public void setAnsw4(String answ4) {
+        this.answ4 = answ4;
+    }
+
+    public String toString(){
+        return question;
     }
 
 

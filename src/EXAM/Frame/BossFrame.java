@@ -15,6 +15,7 @@ public class BossFrame extends JFrame {
     public Profile profile;
     public Test test;
     public Client client;
+    public AdminPage adminPage;
 
     public BossFrame(){
         client=new Client();
@@ -45,22 +46,16 @@ public class BossFrame extends JFrame {
         profile.setVisible(false);
         add(profile);
 
+        adminPage= new AdminPage(this);
+        adminPage.setVisible(false);
+        add(adminPage);
+
         test=new Test();
         test.setVisible(false);
         add(test);
 
-
-        ArrayList<Question> list= new ArrayList<>();
-        Question q1=new Question(null,Server.getQuestions().getQuestion(),Server.getQuestions().getRightAnswer(),Server.getQuestions().getAnswers());
-        list.add(q1);
+        ArrayList<Question> list= Server.getQuestions();
         test.showQuestions(list);
-
-//        for(int i=0;i<10;i++){
-//            ArrayList<Question>list=new ArrayList<>();
-//            Question q=new Question(null,Server.getQuestions().getQuestion(), Server.getQuestions().getRightAnswer(),Server.getQuestions().getAnswers());
-//            list.add(q);
-//            test.showQuestions(list);
-//        }
 
 
     }

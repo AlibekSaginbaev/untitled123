@@ -1,17 +1,22 @@
 package EXAM.Frame;
 
+import EXAM.data.Question;
+import EXAM.network.Server;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.Queue;
 
 public class Window1 extends JPanel {
     private JButton Profile;
     private JComboBox Subject;
     private JLabel subj;
     private JLabel welcome;
-    private String subjects[]={"","Math","Proga"};
+    private String subjects[]={"","Math"};
     private JButton exit,start;
     private JButton asd;
     private BossFrame frame;
@@ -41,7 +46,7 @@ public class Window1 extends JPanel {
         start.setBounds(300,250,100,25);
         add(start);
 
-        welcome=new JLabel();
+        welcome=new JLabel("");
         welcome.setBounds(250,100,200,25);
         add(welcome);
      //   welcome.setText(Registration.namewl);
@@ -53,6 +58,7 @@ public class Window1 extends JPanel {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 frame.window1.setVisible(false);
                 frame.test.setVisible(true);
             }
@@ -76,17 +82,10 @@ public class Window1 extends JPanel {
             }
         });
 
-//        asd=new JButton();
-//        asd.setBounds(410,300,100,25);
-//        add(asd);
-//
-//        asd.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                String all="";
-//                all=Main.user.toString();
-//                welcome.setText(all);
-//            }
-//        });
+
+    }
+
+    public void updateData(){
+        welcome.setText("Welcome "+Main.currentUser.getName());
     }
 }

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Client {
     private Socket socket=null;
@@ -65,43 +66,45 @@ public class Client {
         return authorization;
     }
 
-    public boolean Profile(User user){
+    public boolean question(Question question){
         String str="";
-        try {
-            Packet packet=new Packet("Profile");
+
+        try{
+            Packet packet=new Packet("QUESTION", question);
             oos.writeObject(packet);
 
-            Packet answerPacket= (Packet) ois.readObject();
-            str=answerPacket.getCode();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            Packet pc=(Packet)ois.readObject();
+            str=pc.getCode();
         }
-        if(str.equals("ANSWER"))
+
+        catch (Exception e){e.printStackTrace();}
+
+        if(str.equals("SUCCESS"))
             return true;
+
         return false;
     }
 
-    public User getInfoStudent(){
-        User users=null;
-        Packet packet=new Packet("GET_INFO",null);
-        try{
-            oos.writeObject(packet);
-            Packet packet1=(Packet)ois.readObject();
-            users=(User) packet1.getInfo();
-        }
-        catch (Exception e){e.printStackTrace();}
-        return users;
-    }
+//    public User getInfoUser(){
+//        User getInfo = null;
+//        try{
+//            Packet packet= new Packet("GET_INFO");
+//            oos.writeObject(packet);
+//
+//            Packet answerPacket=(Packet)ois.readObject();
+//            getInfo = (User)answerPacket.getInfo();
+//        }catch(Exception e){e.printStackTrace();}
+//
+//        return getInfo;
+//    }
 
-    public Question getQuestion(){
-        Question question=null;
-        Packet packet=new Packet("GET_QUES",null);
+    public ArrayList<Question> getQuestion(){
+        ArrayList<Question> question=new ArrayList<>();
+        Packet packet=new Packet("GET_QUES");
         try{
             oos.writeObject(packet);
             Packet packet1=(Packet) ois.readObject();
-            question=(Question)packet1.getInfo();
+            question=(ArrayList<Question>)packet1.getInfo();
         }catch (Exception e){e.printStackTrace();}
         return question;
     }

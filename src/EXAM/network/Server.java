@@ -79,77 +79,71 @@ public class Server {
         return authorization;
     }
 
-    public static User Profile(User user){
-        User profile=null;
-        try {
-            PreparedStatement preparedStatement=connection.prepareStatement("SELECT * FROM users");
-            ResultSet rs=preparedStatement.executeQuery();
+    public static boolean toWriteQuestion(Question question){
+        int rows=0;
+        try{
+            PreparedStatement statement= connection.prepareStatement("INSERT INTO math (id, question, answ1, answ2, answ3, answ4) VALUES (null, ?,?,?,?,?)");
+            statement.setString(1,question.getQuestion());
+            statement.setString(2,question.getAnsw1());
+            statement.setString(3,question.getAnsw2());
+            statement.setString(4,question.getAnsw3());
+            statement.setString(5,question.getAnsw4());
 
-            ArrayList<User> users = new ArrayList<>();
-
-            while(rs.next()){
-                profile=new User();
-                user.setId(rs.getLong("id"));
-                user.setLogin(rs.getString("login"));
-                user.setPassword(rs.getString("password"));
-                user.setName(rs.getString("name"));
-                user.setRole(rs.getString("role"));
-
-                users.add(user);
-            }
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return profile;
-
-    }
-
-    public static ArrayList<User> getInfoStud(){
-        ArrayList<User> users=new ArrayList<>();
-        try {
-            PreparedStatement statement=connection.prepareStatement("SELECT * FROM users");
-            ResultSet resultSet=statement.executeQuery();
-
-            while(resultSet.next()){
-                Long id=resultSet.getLong("id");
-                String login=resultSet.getString("login");
-                String name=resultSet.getString("name");
-                String surname=resultSet.getString("surname");
-                users.add(new User(id, login,name, surname));
-            }
+            rows = statement.executeUpdate();
             statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return users;
+        catch (Exception e){e.printStackTrace();}
+
+        if(rows == 1)
+            return true;
+         return  false;
     }
-    public static Question getQuestions(){
-        Question question= null;
+
+
+
+//    public static User getInfoAboutUser(){
+//        User getInfo=null;
+//        try{
+//            PreparedStatement statement= connection.prepareStatement("SELECT * FROM users WHERE name = ?");
+//            statement.setString(1, getInfo.getName());
+//
+//            ResultSet rs=statement.executeQuery();
+//            if(rs.next()){
+//                getInfo = new User(rs.getLong("id"),
+//                        rs.getString("login"),
+//                        rs.getString("password"),
+//                        rs.getString("name"),
+//                        rs.getString("surname"),
+//                        rs.getString("role"));
+//            }
+//            statement.close();
+//        }catch(Exception e){e.printStackTrace();}
+//
+//        return  getInfo;
+//    }
+
+    public static ArrayList<Question> getQuestions(){
+        ArrayList<Question> questions= new ArrayList<>() ;
         try {
             PreparedStatement statement=connection.prepareStatement("SELECT * FROM math ");
             ResultSet resultSet=statement.executeQuery();
             while(resultSet.next()){
                 Long id=resultSet.getLong("id");
                 String questionArea=resultSet.getString("question");
-                ArrayList<String> answ=new ArrayList<>();
+
                 String answ1=resultSet.getString("answ1");
                 String answ2=resultSet.getString("answ2");
                 String answ3=resultSet.getString("answ3");
                 String answ4=resultSet.getString("answ4");
-                answ.add(answ1);
-                answ.add(answ2);
-                answ.add(answ3);
-                answ.add(answ4);
-                Integer subj=resultSet.getInt("subjId");
 
-                question=new Question(id, questionArea, answ1,answ);
+
+                questions.add(new Question(id, questionArea, answ1,answ1,answ2,answ3,answ4));
             }
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return question;
+        return questions;
     }
 
 }
