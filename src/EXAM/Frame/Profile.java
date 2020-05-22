@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class Profile extends JPanel {
     private JLabel main, name, surname, login;
@@ -19,6 +20,8 @@ public class Profile extends JPanel {
     private Object columns[]={"SUBJECT", "RESULT"};
     private JScrollPane pane;
     private DefaultTableModel model;
+
+    private User user=null;
 
     public Profile(BossFrame frame){
         this.frame=frame;
@@ -66,12 +69,17 @@ public class Profile extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 frame.profile.setVisible(false);
                 frame.window1.setVisible(true);
+                namet.setText("");
+                surnamet.setText("");
+                logint.setText("");
             }
         });
 
         refresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                user= frame.client.getAllUser(frame.currentUser.getId());
+                update(user);
 
             }
         });
@@ -82,6 +90,12 @@ public class Profile extends JPanel {
         add(pane);
 
 
+    }
+
+    public void update(User user){
+        namet.setText(user.getName());
+        surnamet.setText(user.getSurname());
+        logint.setText(user.getLogin());
     }
 
 }

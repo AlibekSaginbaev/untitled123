@@ -85,28 +85,39 @@ public class Client {
         return false;
     }
 
-//    public User getInfoUser(){
-//        User getInfo = null;
+
+//    public ArrayList<Question> getQuestion(){
+//        ArrayList<Question> question=new ArrayList<>();
+//        Packet packet=new Packet("GET_QUES");
 //        try{
-//            Packet packet= new Packet("GET_INFO");
 //            oos.writeObject(packet);
-//
-//            Packet answerPacket=(Packet)ois.readObject();
-//            getInfo = (User)answerPacket.getInfo();
-//        }catch(Exception e){e.printStackTrace();}
-//
-//        return getInfo;
+//            Packet packet1=(Packet) ois.readObject();
+//            question=(ArrayList<Question>)packet1.getInfo();
+//        }catch (Exception e){e.printStackTrace();}
+//        return question;
 //    }
 
-    public ArrayList<Question> getQuestion(){
-        ArrayList<Question> question=new ArrayList<>();
-        Packet packet=new Packet("GET_QUES");
+    public User getAllUser(Long id){
+        User user= null;
+        Packet packet1= new Packet("GET_USER", id);
         try{
-            oos.writeObject(packet);
-            Packet packet1=(Packet) ois.readObject();
-            question=(ArrayList<Question>)packet1.getInfo();
+            oos.writeObject(packet1);
+            Packet response= (Packet)ois.readObject();
+            user= (User)response.getInfo();
+        }catch (Exception e){e.printStackTrace();}
+        return user;
+    }
+
+    public ArrayList<Question> getAllQuestion(){
+        ArrayList<Question> question= null;
+        Packet packet1= new Packet("GET_QUESTIONS");
+        try{
+            oos.writeObject(packet1);
+            Packet response= (Packet)ois.readObject();
+            question= (ArrayList<Question>) response.getInfo();
         }catch (Exception e){e.printStackTrace();}
         return question;
     }
+
 
 }

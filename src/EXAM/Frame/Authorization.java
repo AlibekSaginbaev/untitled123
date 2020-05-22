@@ -67,6 +67,7 @@ public class Authorization extends JPanel {
 
                     User authUser = frame.client.login(u);
                     if(authUser != null){
+                        frame.currentUser=authUser;
                        // JOptionPane.showMessageDialog(frame, "You are Logged in");
                         logf.setText("");
                         parf.setText("");

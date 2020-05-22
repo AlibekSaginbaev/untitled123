@@ -10,7 +10,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class Main {
-    public static User currentUser;
     public static void main(String[] args) {
         BossFrame frame=new BossFrame();
         frame.setVisible(true);

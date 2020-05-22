@@ -1,6 +1,7 @@
 package EXAM.Frame;
 
 import EXAM.data.Question;
+import EXAM.data.User;
 import EXAM.network.Client;
 import EXAM.network.Server;
 
@@ -16,6 +17,7 @@ public class BossFrame extends JFrame {
     public Test test;
     public Client client;
     public AdminPage adminPage;
+    public User currentUser;
 
     public BossFrame(){
         client=new Client();
@@ -50,12 +52,12 @@ public class BossFrame extends JFrame {
         adminPage.setVisible(false);
         add(adminPage);
 
-        test=new Test();
+        test=new Test(this);
         test.setVisible(false);
         add(test);
 
-        ArrayList<Question> list= Server.getQuestions();
-        test.showQuestions(list);
+//        ArrayList<Question> list= Server.getQuestions();
+//        test.showQuestions(list);
 
 
     }

@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Queue;
 
 public class Window1 extends JPanel {
@@ -21,6 +22,9 @@ public class Window1 extends JPanel {
     private JButton asd;
     private BossFrame frame;
 
+    public Integer result=0;
+
+    ArrayList<Question> questions=null;
 
     public Window1(BossFrame frame){
         this.frame=frame;
@@ -49,7 +53,7 @@ public class Window1 extends JPanel {
         welcome=new JLabel("");
         welcome.setBounds(250,100,200,25);
         add(welcome);
-     //   welcome.setText(Registration.namewl);
+//        welcome.setText(frame.currentUser.getName());
 
         exit=new JButton("EXIT");
         exit.setBounds(300,300,100,25);
@@ -61,13 +65,28 @@ public class Window1 extends JPanel {
 
                 frame.window1.setVisible(false);
                 frame.test.setVisible(true);
+
+                questions=frame.client.getAllQuestion();
+                frame.test.showQuestions(questions, questions.get(frame.test.currentQuestionIndex).getAnsw1(),
+                        questions.get(frame.test.currentQuestionIndex).getAnsw2(),
+                        questions.get(frame.test.currentQuestionIndex).getAnsw3(),
+                        questions.get(frame.test.currentQuestionIndex).getAnsw4());
+//                for(int i=0;i<questions.size();i++){
+//                    sort(questions.get(i).getAnsw1(),questions.get(i).getAnsw2(),questions.get(i).getAnsw3(),questions.get(i).getAnsw4());
+//                    if(questions.get(i).isAnsweredRight())
+//                        result++;
+//
+//                }
+
+
             }
         });
 
         exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                frame.window1.setVisible(false);
+                frame.login.setVisible(true);
             }
         });
 
@@ -86,6 +105,16 @@ public class Window1 extends JPanel {
     }
 
     public void updateData(){
-        welcome.setText("Welcome "+Main.currentUser.getName());
+        welcome.setText("Welcome "+frame.currentUser.getName());
     }
+
+//    public void sort(String answ1, String answ2, String answ3, String answ4){
+//        ArrayList<String> list = new ArrayList<>();
+//        list.add(answ1);
+//        list.add(answ2);
+//        list.add(answ3);
+//        list.add(answ4);
+//
+//        Collections.shuffle(list);
+//    }
 }

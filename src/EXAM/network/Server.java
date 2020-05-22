@@ -101,43 +101,69 @@ public class Server {
 
 
 
-//    public static User getInfoAboutUser(){
-//        User getInfo=null;
-//        try{
-//            PreparedStatement statement= connection.prepareStatement("SELECT * FROM users WHERE name = ?");
-//            statement.setString(1, getInfo.getName());
+//    public static ArrayList<Question> getQuestions(){
+//        ArrayList<Question> questions= new ArrayList<>() ;
+//        try {
+//            PreparedStatement statement=connection.prepareStatement("SELECT * FROM math ");
+//            ResultSet resultSet=statement.executeQuery();
+//            while(resultSet.next()){
+//                Long id=resultSet.getLong("id");
+//                String questionArea=resultSet.getString("question");
 //
-//            ResultSet rs=statement.executeQuery();
-//            if(rs.next()){
-//                getInfo = new User(rs.getLong("id"),
-//                        rs.getString("login"),
-//                        rs.getString("password"),
-//                        rs.getString("name"),
-//                        rs.getString("surname"),
-//                        rs.getString("role"));
+//                String answ1=resultSet.getString("answ1");
+//                String answ2=resultSet.getString("answ2");
+//                String answ3=resultSet.getString("answ3");
+//                String answ4=resultSet.getString("answ4");
+//
+//
+//                questions.add(new Question(id, questionArea, answ1,answ1,answ2,answ3,answ4));
 //            }
 //            statement.close();
-//        }catch(Exception e){e.printStackTrace();}
-//
-//        return  getInfo;
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return questions;
 //    }
+    public static User getUser(Long idd){
+        User user=new User();
+        try {
+            PreparedStatement statement=connection.prepareStatement("SELECT * FROM users WHERE id=?");
+            statement.setLong(1, idd);
+            ResultSet resultSet=statement.executeQuery();
 
-    public static ArrayList<Question> getQuestions(){
-        ArrayList<Question> questions= new ArrayList<>() ;
+            while(resultSet.next()){
+                Long id=resultSet.getLong("id");
+                String login=resultSet.getString("login");
+                String password= resultSet.getString("password");
+                String name= resultSet.getString("name");
+                String surname= resultSet.getString("surname");
+                String role= resultSet.getString("role");
+
+                user= new User(id, login, password, name,surname,role);
+            }
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    public static ArrayList<Question> question(){
+        ArrayList<Question> questions=new ArrayList<>();
         try {
             PreparedStatement statement=connection.prepareStatement("SELECT * FROM math ");
             ResultSet resultSet=statement.executeQuery();
+
             while(resultSet.next()){
                 Long id=resultSet.getLong("id");
-                String questionArea=resultSet.getString("question");
-
+                String question=resultSet.getString("question");
                 String answ1=resultSet.getString("answ1");
                 String answ2=resultSet.getString("answ2");
                 String answ3=resultSet.getString("answ3");
                 String answ4=resultSet.getString("answ4");
+                Integer subjectid=resultSet.getInt("subjectid");
 
-
-                questions.add(new Question(id, questionArea, answ1,answ1,answ2,answ3,answ4));
+                questions.add(new Question(id, question,answ1, answ1, answ2,answ3,answ4));
             }
             statement.close();
         } catch (SQLException e) {

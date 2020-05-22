@@ -54,22 +54,22 @@ public class ServerThread extends Thread {
 
                     oos.writeObject(packet2);
                 }
+                else if(packet.getCode().equals("GET_USER")) {
+                    Packet packet2 = new Packet("ANSWER_LIST", Server.getUser((Long) packet.getInfo()));
+                    oos.writeObject(packet2);
+                }
+                else if(packet.getCode().equals("GET_QUESTIONS")) {
+                    Packet packet2 = new Packet("ANSWER_LIST", Server.question());
+                    oos.writeObject(packet2);
+                }
 
-//                if(packet.getCode().equals("GET_INFO")){
-//                    User user =(User)packet.getInfo();
-//                    User profile= Server.getInfoAboutUser();
-//
-//                    Packet packet1= new Packet("ANSWER", profile);
+//                if(packet.getCode().equals("GET_QUES")){
+//                    //Question question=(Question) packet.getInfo();
+//                    //Question question1=Server.getQuestions();
+//                    ArrayList<Question> question1=Server.getQuestions();
+//                    Packet packet1=new Packet("ANSWER",question1);
 //                    oos.writeObject(packet1);
 //                }
-
-                if(packet.getCode().equals("GET_QUES")){
-                    //Question question=(Question) packet.getInfo();
-                    //Question question1=Server.getQuestions();
-                    ArrayList<Question> question1=Server.getQuestions();
-                    Packet packet1=new Packet("ANSWER",question1);
-                    oos.writeObject(packet1);
-                }
              }
 
             ois.close();
