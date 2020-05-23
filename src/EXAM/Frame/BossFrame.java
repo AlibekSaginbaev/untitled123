@@ -18,6 +18,7 @@ public class BossFrame extends JFrame {
     public Client client;
     public AdminPage adminPage;
     public User currentUser;
+    public Result result;
 
     public BossFrame(){
         client=new Client();
@@ -51,6 +52,10 @@ public class BossFrame extends JFrame {
         adminPage= new AdminPage(this);
         adminPage.setVisible(false);
         add(adminPage);
+
+        result=new Result(this);
+        result.setVisible(false);
+        add(result);
 
         test=new Test(this);
         test.setVisible(false);

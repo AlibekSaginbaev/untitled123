@@ -108,9 +108,9 @@ public class Client {
         return user;
     }
 
-    public ArrayList<Question> getAllQuestion(){
+    public ArrayList<Question> getAllQuestion(int subjid){
         ArrayList<Question> question= null;
-        Packet packet1= new Packet("GET_QUESTIONS");
+        Packet packet1= new Packet("GET_QUESTIONS", subjid);
         try{
             oos.writeObject(packet1);
             Packet response= (Packet)ois.readObject();

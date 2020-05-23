@@ -7,21 +7,37 @@ public class Question implements Serializable {
     private Long id;
     private String question;
     private String rightAnswer;
-    private String answ1, answ2, answ3, answ4;
+    private ArrayList<String> answers;
     private boolean answeredRight;
+    private String answ1,answ2,answ3,answ4;
+    private int subjectid;
 
     public Question() {
     }
 
-    public Question(Long id, String question, String rightAnswer, String answ1, String answ2, String answ3, String answ4) {
+    public Question(Long id, String question, String rightAnswer, ArrayList<String> answers) {
         this.id = id;
         this.question = question;
         this.rightAnswer = rightAnswer;
-        this.answ1 = answ1;
-        this.answ2 = answ2;
-        this.answ3 = answ3;
-        this.answ4 = answ4;
+        this.answers = answers;
         answeredRight=false;
+    }
+
+    public Question(Long id, String question, String rightAnswer, ArrayList<String> answers, int subjectid) {
+        this.id = id;
+        this.question = question;
+        this.rightAnswer = rightAnswer;
+        this.answers = answers;
+        this.subjectid = subjectid;
+        answeredRight=false;
+    }
+
+    public int getSubjectid() {
+        return subjectid;
+    }
+
+    public void setSubjectid(int subjectid) {
+        this.subjectid = subjectid;
     }
 
     public boolean isAnsweredRight(){
@@ -57,6 +73,19 @@ public class Question implements Serializable {
         this.rightAnswer = rightAnswer;
     }
 
+    public ArrayList<String> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(ArrayList<String> answers) {
+        this.answers = answers;
+    }
+
+    public String toString(){
+        return question;
+    }
+
+
     public String getAnsw1() {
         return answ1;
     }
@@ -88,10 +117,4 @@ public class Question implements Serializable {
     public void setAnsw4(String answ4) {
         this.answ4 = answ4;
     }
-
-    public String toString(){
-        return question;
-    }
-
-
 }

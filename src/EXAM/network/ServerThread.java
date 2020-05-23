@@ -59,7 +59,7 @@ public class ServerThread extends Thread {
                     oos.writeObject(packet2);
                 }
                 else if(packet.getCode().equals("GET_QUESTIONS")) {
-                    Packet packet2 = new Packet("ANSWER_LIST", Server.question());
+                    Packet packet2 = new Packet("ANSWER_LIST", Server.question((int)packet.getInfo()));
                     oos.writeObject(packet2);
                 }
 

@@ -82,13 +82,13 @@ public class Server {
     public static boolean toWriteQuestion(Question question){
         int rows=0;
         try{
-            PreparedStatement statement= connection.prepareStatement("INSERT INTO math (id, question, answ1, answ2, answ3, answ4) VALUES (null, ?,?,?,?,?)");
+            PreparedStatement statement= connection.prepareStatement("INSERT INTO math (id, question, answ1, answ2, answ3, answ4,subjectid) VALUES (null, ?,?,?,?,?,?)");
             statement.setString(1,question.getQuestion());
             statement.setString(2,question.getAnsw1());
             statement.setString(3,question.getAnsw2());
             statement.setString(4,question.getAnsw3());
             statement.setString(5,question.getAnsw4());
-
+            statement.setInt(6,question.getSubjectid());
             rows = statement.executeUpdate();
             statement.close();
         }
@@ -148,22 +148,28 @@ public class Server {
         return user;
     }
 
-    public static ArrayList<Question> question(){
+    public static ArrayList<Question> question(int subjid){
         ArrayList<Question> questions=new ArrayList<>();
         try {
-            PreparedStatement statement=connection.prepareStatement("SELECT * FROM math ");
+            PreparedStatement statement=connection.prepareStatement("SELECT * FROM math WHERE subjectid=?");
+            statement.setInt(1,subjid);
             ResultSet resultSet=statement.executeQuery();
 
             while(resultSet.next()){
                 Long id=resultSet.getLong("id");
                 String question=resultSet.getString("question");
+
                 String answ1=resultSet.getString("answ1");
                 String answ2=resultSet.getString("answ2");
                 String answ3=resultSet.getString("answ3");
                 String answ4=resultSet.getString("answ4");
                 Integer subjectid=resultSet.getInt("subjectid");
-
-                questions.add(new Question(id, question,answ1, answ1, answ2,answ3,answ4));
+                ArrayList<String> answers= new ArrayList<>();
+                answers.add(answ1);
+                answers.add(answ2);
+                answers.add(answ3);
+                answers.add(answ4);
+                questions.add(new Question(id, question,answ1, answers));
             }
             statement.close();
         } catch (SQLException e) {

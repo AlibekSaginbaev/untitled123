@@ -1,6 +1,7 @@
 package EXAM.Frame;
 
 import EXAM.data.Question;
+import EXAM.data.User;
 import EXAM.network.Server;
 
 import javax.swing.*;
@@ -17,11 +18,12 @@ public class Window1 extends JPanel {
     private JComboBox Subject;
     private JLabel subj;
     private JLabel welcome;
-    private String subjects[]={"","Math"};
+    private String subjects[]={"","Math","Geography"};
     private JButton exit,start;
     private JButton asd;
     private BossFrame frame;
 
+    private User user=null;
     public Integer result=0;
 
     ArrayList<Question> questions=null;
@@ -62,15 +64,29 @@ public class Window1 extends JPanel {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                if(Subject.getSelectedIndex()==0){
+                    JOptionPane.showMessageDialog(frame, "Fill all fields");
+                }else{
                 frame.window1.setVisible(false);
                 frame.test.setVisible(true);
 
-                questions=frame.client.getAllQuestion();
-                frame.test.showQuestions(questions, questions.get(frame.test.currentQuestionIndex).getAnsw1(),
-                        questions.get(frame.test.currentQuestionIndex).getAnsw2(),
-                        questions.get(frame.test.currentQuestionIndex).getAnsw3(),
-                        questions.get(frame.test.currentQuestionIndex).getAnsw4());
+                questions=frame.client.getAllQuestion(Subject.getSelectedIndex());
+
+                for(int i=0;i<questions.size();i++){
+                    frame.test.sort(questions.get(i).getAnswers());
+
+                }
+
+
+                frame.test.showQuestions(questions);}
+//                for(int i=0;i<questions.size();i++){
+//                    if(questions.get(i).isAnsweredRight()==true) {
+//                        result++;
+//
+//                   }
+//
+//                }
+
 //                for(int i=0;i<questions.size();i++){
 //                    sort(questions.get(i).getAnsw1(),questions.get(i).getAnsw2(),questions.get(i).getAnsw3(),questions.get(i).getAnsw4());
 //                    if(questions.get(i).isAnsweredRight())
@@ -96,8 +112,8 @@ public class Window1 extends JPanel {
 
                 frame.window1.setVisible(false);
                 frame.profile.setVisible(true);
-
-
+                user= frame.client.getAllUser(frame.currentUser.getId());
+                frame.profile.update(user);
             }
         });
 
